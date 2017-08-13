@@ -1,0 +1,7 @@
+[Unit]
+Description = Sinatra
+After = network.target
+[Service]
+ExecStart = /apps/simple-sinatra-app/sinatra.sh
+[Install]
+WantedBy = multi-user.target
