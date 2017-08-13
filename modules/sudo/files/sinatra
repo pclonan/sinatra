@@ -1,0 +1,3 @@
+User_Alias SINATRA_ADMINS = %sinatra
+Cmnd_Alias SINATRA_SERVICE = /usr/bin/systemctl start sinatra, /usr/bin/systemctl stop sinatra, /usr/bin/systemctl status sinatra
+SINATRA_ADMINS ALL = SINATRA_SERVICE
