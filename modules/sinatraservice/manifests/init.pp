@@ -1,6 +1,9 @@
 class sinatraservice {
   file { '/apps':
     ensure => directory,
+	owner => 'root',
+	group => 'root',
+	mode => '0644',
   }
   file { '/apps/simple-sinatra-app/sinatra.sh':
     ensure => file,
@@ -9,7 +12,7 @@ class sinatraservice {
     group   => '500',
     mode    => '0750',
     notify  => Service['sinatra-service'],
-    require => [ Vcsrepo['/apps/simple-sinatra-app'], User['sinatra'] ]
+    require => [ Vcsrepo['/apps/simple-sinatra-app'], User['sinatra'] ],
   }
   file { '/etc/systemd/system/sinatra.service':
     ensure => file,

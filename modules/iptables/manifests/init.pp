@@ -5,6 +5,10 @@ class iptables {
     group   => 'root',
     mode    => '0640',
 	notify  => Service['iptables'],
+	require => Package['iptables-service'],
+  }
+  package {'iptables-service':
+    ensure => installed,
   }
   service { 'iptables': 
     ensure => running,
