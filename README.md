@@ -1,10 +1,30 @@
-# The Sinatra app for REA Group
+# The Simple Sinatra App for REA Group
 
-The following process describes the deployment of the REA Group Sinatra app.<br>
+The following process describes the deployment of REA Group's Simple Sinatra app.<br>
 https://github.com/rea-cruitment/simple-sinatra-app
 
-The O/S is deployed using Vagrant. The O/S version is Centos 7.2.<br>
-Once the O/S has been deployed, Puppet and Git are installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.
+The O/S chosen for this deployment is Centos 7.2.<br>
+The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
+Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration of the O/S, as well as the installation of the Simple Sinatra application.<br>
+Once the O/S has been deployed, Puppet and Git are installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
+The initial Puppet run uses the modules which are synced as part of the Vagrant deployment:
+
+    .
+    ├── manifests
+    │   └── default.pp
+    ├── modules
+    │   ├── git
+    │   ├── iptables
+    │   ├── osharden
+    │   ├── puppet-cron
+    │   ├── ruby
+    │   ├── sinatraservice
+    │   ├── ssh
+    │   ├── sudo
+    │   ├── users
+    │   └── vcsrepo
+    ├── README.md
+    └── Vagrantfile
 
 **Prerequisites**
 
