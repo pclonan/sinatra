@@ -4,8 +4,8 @@ class ipv6 {
     changes => [
       "set NETWORKING_IPV6 no",
     ],
+    notify => Service['network'],
   }
-
   augeas { "/etc/sysctl.conf":
     context => "/files/etc/sysctl.conf",
     changes => [
@@ -13,4 +13,7 @@ class ipv6 {
       "set net.ipv6.conf.default.disable_ipv6 1",
     ],
   }
+  service { 'network':
+    ensure => running,
+    enable => true,
 }
