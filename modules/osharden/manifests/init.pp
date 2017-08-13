@@ -1,11 +1,13 @@
 class osharden {
+
   file { 'sysctl_conf':
     ensure => file,
-    path => '/etc/sysctl.conf',
-    owner => 'root',
-    group => 'root',
-    mode => '0644',
+    path   => '/etc/sysctl.conf',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
+
   augeas { "sysctl":
     context => "/files/etc/sysctl.conf",
     changes => [
@@ -30,22 +32,26 @@ class osharden {
       "set kernel.dmesg_restrict 1",
     ],
   }
+
   exec { "sysctl":
-      command => "/sbin/sysctl -p",
-      refreshonly => true,
-      subscribe => File["sysctl_conf"],
+    command     => "/sbin/sysctl -p",
+    refreshonly => true,
+    subscribe   => File["sysctl_conf"],
   }
+
   augeas { "/etc/sysconfig/network":
     context => "/files/etc/sysconfig/network",
     changes => [
       "set NETWORKING_IPV6 no",
     ],
-    notify => Service['network'],
+    notify  => Service['network'],
   }
+
   service { 'network':
     ensure => running,
     enable => true,
   }
+
   service { [ 'snmpd',
       'apmd',
       'bluetooth',
@@ -60,4 +66,5 @@ class osharden {
     ensure => stopped,
     enable => false,
   }
+
 }

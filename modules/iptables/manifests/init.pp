@@ -1,4 +1,5 @@
 class iptables {
+
   file { '/etc/sysconfig/iptables' :
     source  => 'puppet:///modules/iptables/iptables',
     owner   => 'root',
@@ -7,15 +8,19 @@ class iptables {
     notify  => Service['iptables'],
     require => Package['iptables-services'],
   }
+
   package {'iptables-services':
     ensure => installed,
   }
+
   service { 'iptables': 
     ensure => running,
     enable => true,
   }
+
   service { 'firewalld':
     ensure => stopped,
     enable => false,
   }
+
 }
