@@ -4,7 +4,7 @@ class ssh {
       ensure => "installed",
   }
 
-  service { "ssh":
+  service { "sshd":
       ensure    => running,
       hasstatus => true,
       require   => Package["openssh-server"],
