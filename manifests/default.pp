@@ -4,9 +4,8 @@ node default {
   include ruby
   include sinatraservice
   include iptables
-  include ipv6
   include ssh
   include sudo
-  include execshield
+  include osharden
   include puppet-cron
 }
