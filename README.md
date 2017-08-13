@@ -3,11 +3,30 @@
 The following process describes the deployment of REA Group's Simple Sinatra app.<br>
 https://github.com/rea-cruitment/simple-sinatra-app
 
+**Prerequisites**
+
+* Vagrant (https://www.vagrantup.com)
+* VirtualBox (https://www.virtualbox.org)
+* A Git client (eg: https://git-scm.com)
+
+**Installation**
+
+    git clone git://github.com/pclonan/sinatra
+    cd sinatra
+    vagrant up
+
+When the "vagrant up" process has completed, you will see the location of the running Sinatra app:<br>
+
+    ==> default: Notice: Sinatra app: http://192.168.0.200
+
+**Descripton**
+
 The O/S chosen for this deployment is Centos 7.2.<br>
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
 Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration of the O/S, as well as the installation of the Simple Sinatra application.<br>
+
 Once the O/S has been deployed, Puppet and Git are installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
-The initial Puppet run uses the modules which are synced as part of the Vagrant deployment:
+The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync as part of the Vagrant provisioning process:
 
     .
     ├── manifests
@@ -26,22 +45,9 @@ The initial Puppet run uses the modules which are synced as part of the Vagrant 
     ├── README.md
     └── Vagrantfile
 
-**Prerequisites**
+However, as there is no Puppet master in this environment, each subsequent Puppet run is controlled via cron. The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
 
-* Vagrant (https://www.vagrantup.com)
-* VirtualBox (https://www.virtualbox.org)
-* A Git client (eg: https://git-scm.com)
-
-**Installation**
-
-    git clone git://github.com/pclonan/sinatra
-    cd sinatra
-    vagrant up
-
-When the "vagrant up" process has completed, you will see the location of the running Sinatra app:<br>
-
-    ==> default: Notice: Sinatra app: http://192.168.0.200
-
+    */30 * * * * /etc/puppet/rebase.sh
 
 **Expected Output**
 
