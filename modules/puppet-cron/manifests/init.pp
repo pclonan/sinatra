@@ -1,14 +1,5 @@
 class puppet-cron {
 
-  file { 'post-hook':
-    ensure  => file,
-    path    => '/etc/puppet/.git/hooks/post-merge',
-    source  => 'puppet:///modules/puppet-cron/post-merge',
-    mode    => 0755,
-    owner   => root,
-    group   => root,
-  }
-
   file { 'rebase.sh':
     ensure  => file,
     path    => '/etc/puppet/rebase.sh',
@@ -23,7 +14,6 @@ class puppet-cron {
     command => "/etc/puppet/rebase.sh",
     user    => root,
     minute  => '*/30',
-    require => File['post-hook'],
   }
 
 }
