@@ -16,4 +16,5 @@ class ipv6 {
   service { 'network':
     ensure => running,
     enable => true,
+  }
 }
