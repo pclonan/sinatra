@@ -32,5 +32,9 @@ class sinatraservice {
   service { 'sinatra.service':
     ensure => running,
     enable => true,
+	notify => Notify['sinatra'],
+  }
+  notify { 'sinatra':
+    name => "Sinatra app: http://${::ipaddress_eth1}",
   }
 }
