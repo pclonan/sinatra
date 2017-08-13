@@ -4,6 +4,7 @@ node default {
   include ruby
   include sinatraservice
   include iptables
+  include ssh
   include sudo
   include puppet-cron
 }
