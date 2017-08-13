@@ -7,7 +7,7 @@ class iptables {
     notify  => Service['iptables'],
     require => Package['iptables-services'],
   }
-  package {'iptables-service':
+  package {'iptables-services':
     ensure => installed,
   }
   service { 'iptables': 
