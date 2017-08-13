@@ -20,5 +20,6 @@ class ssh {
     "set PasswordAuthentication no",
     "set Port 22",
   ],
+  notify => Service['sshd'],
  }
 }
