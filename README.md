@@ -59,7 +59,7 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
     ==> default: A newer version of the box 'centos/7' is available! You currently
     ==> default: have version '1605.01'. The latest is version '1707.01'. Run
     ==> default: `vagrant box update` to update.
-    ==> default: Setting the name of the VM: sinatra_default_1502618451099_90292
+    ==> default: Setting the name of the VM: sinatra_default_1502624449855_83515
     ==> default: Clearing any previously set network interfaces...
     ==> default: Preparing network interfaces based on configuration...
         default: Adapter 1: nat
@@ -72,11 +72,13 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
         default: SSH username: vagrant
         default: SSH auth method: private key
         default: Warning: Connection reset. Retrying...
+        default: Warning: Connection aborted. Retrying...
+        default: Warning: Connection reset. Retrying...
+        default: Warning: Remote connection disconnect. Retrying...
+        default: Warning: Connection aborted. Retrying...
         default: Warning: Remote connection disconnect. Retrying...
         default: Warning: Connection aborted. Retrying...
         default: Warning: Connection reset. Retrying...
-        default: Warning: Connection aborted. Retrying...
-        default: Warning: Remote connection disconnect. Retrying...
         default: Warning: Connection aborted. Retrying...
         default:
         default: Vagrant insecure key detected. Vagrant will automatically replace
@@ -101,17 +103,18 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
     ==> default: Rsyncing folder: /cygdrive/c/Users/Paul/sinatra/ => /home/vagrant/sync
     ==> default: Running provisioner: shell...
         default: Running: inline script
-    ==> default: warning: /var/tmp/rpm-tmp.SdsJiQ: Header V4 RSA/SHA1 Signature, key ID ef8d349f: NOKEY
+    ==> default: warning: /var/tmp/rpm-tmp.NpXJg6: Header V4 RSA/SHA1 Signature, key ID ef8d349f: NOKEY
     ==> default: Retrieving http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
     ==> default: Preparing...
     ==> default: ########################################
     ==> default: Updating / installing...
-    ==> default: puppetlabs-release-22.0-2             ########################################
+    ==> default: puppetlabs-release-22.0-2
+    ==> default: ########################################
     ==> default: Loaded plugins: fastestmirror
     ==> default: Determining fastest mirrors
-    ==> default:  * base: mirror.ventraip.net.au
-    ==> default:  * extras: mirror.as24220.net
-    ==> default:  * updates: mirror.ventraip.net.au
+    ==> default:  * base: mirror.overthewire.com.au
+    ==> default:  * extras: centos.mirror.ausnetservers.net.au
+    ==> default:  * updates: centos.mirror.ausnetservers.net.au
     ==> default: Resolving Dependencies
     ==> default: --> Running transaction check
     ==> default: ---> Package git.x86_64 0:1.8.3.1-6.el7_2.1 will be installed
@@ -360,13 +363,13 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
     ==> default: Delta RPMs reduced 5.6 M of updates to 3.1 M (44% saved)
     ==> default: Public key for facter-2.4.6-1.el7.x86_64.rpm is not installed
     ==> default: warning: /var/cache/yum/x86_64/7/puppetlabs-products/packages/facter-2.4.6-1.el7.x86_64.rpm: Header V4 RSA/SHA1 Signature, key ID 4bd6ec30: NOKEY
-    ==> default: Public key for libgudev1-219-30.el7_3.9.x86_64.rpm is not installed
-    ==> default: warning: /var/cache/yum/x86_64/7/updates/packages/libgudev1-219-30.el7_3.9.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
     ==> default: Public key for augeas-libs-1.4.0-2.el7.x86_64.rpm is not installed
+    ==> default: warning: /var/cache/yum/x86_64/7/base/packages/augeas-libs-1.4.0-2.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+    ==> default: Public key for libgudev1-219-30.el7_3.9.x86_64.rpm is not installed
     ==> default: Public key for ruby-augeas-0.4.1-3.el7.x86_64.rpm is not installed
     ==> default: Finishing delta rebuilds of 1 package(s) (5.2 M)
     ==> default: --------------------------------------------------------------------------------
-    ==> default: Total                                              3.2 MB/s |  26 MB  00:08
+    ==> default: Total                                              2.8 MB/s |  26 MB  00:09
     ==> default: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
     ==> default: Importing GPG key 0xF4A80EB5:
     ==> default:  Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
@@ -726,7 +729,7 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
     ==> default: Initialized empty Git repository in /etc/puppet/.git/
     ==> default: From https://github.com/pclonan/sinatra
     ==> default:  * branch            master     -> FETCH_HEAD
-    ==> default: Notice: Compiled catalog for localhost in environment production in 1.18 seconds
+    ==> default: Notice: Compiled catalog for localhost in environment production in 1.26 seconds
     ==> default: Notice: /Stage[main]/Iptables/Package[iptables-services]/ensure: created
     ==> default: Notice: /Stage[main]/Ssh/Augeas[sshd_config]/returns: executed successfully
     ==> default: Notice: /Stage[main]/Ssh/Service[sshd]: Triggered 'refresh' from 1 events
@@ -744,11 +747,14 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
     ==> default: Notice: /Stage[main]/Puppet-cron/Cron[puppet-apply]/ensure: created
     ==> default: Notice: /Stage[main]/Users/Group[sinatra]/ensure: created
     ==> default: Notice: /Stage[main]/Users/User[sinatra]/ensure: created
+    ==> default: Notice: /Stage[main]/Osharden/Augeas[sysctl]/returns: executed successfully
+    ==> default: Notice: /Stage[main]/Osharden/Service[kdump.service]/enable: enable changed 'true' to 'false'
+    ==> default: Notice: /Stage[main]/Osharden/Augeas[/etc/sysconfig/network]/returns: executed successfully
+    ==> default: Notice: /Stage[main]/Osharden/Service[network]: Triggered 'refresh' from 1 events
     ==> default: Notice: /Stage[main]/Sinatraservice/Vcsrepo[/apps/simple-sinatra-app]/ensure: Creating repository from latest
     ==> default: Notice: /Stage[main]/Sinatraservice/Vcsrepo[/apps/simple-sinatra-app]/ensure: created
     ==> default: Notice: /Stage[main]/Sinatraservice/File[/apps/simple-sinatra-app/sinatra.sh]/ensure: defined content as '{md5}2bfb6e07a626f1408a232079f7153f7a'
     ==> default: Notice: /Stage[main]/Sinatraservice/Service[sinatra.service]/ensure: ensure changed 'stopped' to 'running'
     ==> default: Notice: Sinatra app: http://192.168.0.200
     ==> default: Notice: /Stage[main]/Sinatraservice/Notify[sinatra]/message: defined 'message' as 'Sinatra app: http://192.168.0.200'
-    ==> default: Notice: Finished catalog run in 33.37 seconds
-
+    ==> default: Notice: Finished catalog run in 39.65 seconds
