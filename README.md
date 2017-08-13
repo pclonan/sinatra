@@ -3,14 +3,14 @@
 The following process describes the deployment of REA Group's Simple Sinatra app.<br>
 https://github.com/rea-cruitment/simple-sinatra-app
 
-**Prerequisites**
-
+Prerequisites
+---------------
 * Vagrant (https://www.vagrantup.com)
 * VirtualBox (https://www.virtualbox.org)
 * A Git client (eg: https://git-scm.com)
 
-**Installation**
-
+Installation
+---------------
     git clone git://github.com/pclonan/sinatra
     cd sinatra
     vagrant up
@@ -19,8 +19,8 @@ When the "vagrant up" process has completed, you will see the location of the ru
 
     ==> default: Notice: Sinatra app: http://192.168.0.200
 
-**Descripton**
-
+Descripton
+---------------
 The O/S chosen for this deployment is Centos 7.2.<br>
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
 Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration of the O/S, as well as the installation of the Simple Sinatra application.<br>
@@ -49,8 +49,8 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
 
     */30 * * * * /etc/puppet/rebase.sh
 
-**Expected Output**
-
+Expected Output
+---------------
     $ vagrant up
     Bringing machine 'default' up with 'virtualbox' provider...
     ==> default: Importing base box 'centos/7'...
