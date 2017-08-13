@@ -21,7 +21,7 @@ When the "vagrant up" process has completed, you will see the location of the ru
 
 Descripton
 ---------------
-The O/S chosen for this deployment is CentOS 7.2.<br>
+The O/S chosen for this deployment is CentOS 7.2. (https://app.vagrantup.com/centos/boxes/7)<br>
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
 
 Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration and hardening of the O/S, as well as the installation of the Simple Sinatra application.<br>
