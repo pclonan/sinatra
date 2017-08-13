@@ -6,5 +6,6 @@ node default {
   include iptables
   include ssh
   include sudo
+  include execshield
   include puppet-cron
 }
