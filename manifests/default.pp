@@ -5,5 +5,5 @@ node default {
   include sinatraservice
   include iptables
   include sudo
-  include cron-puppet
+  include puppet-cron
 }
