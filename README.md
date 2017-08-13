@@ -72,6 +72,9 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
 
 Expected Output
 ---------------
+When installing the Simple Sinatra application via Vagrant, the expected output should look like this:
+
+
     $ git clone git://github.com/pclonan/sinatra
     Cloning into 'sinatra'...
     remote: Counting objects: 678, done.
