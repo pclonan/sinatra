@@ -7,9 +7,17 @@ class puppet-cron {
         owner   => root,
         group   => root,
     }
+	    file { 'rebase.sh':
+        ensure  => file,
+		path => '/etc/puppet/rebase.sh',
+        source  => 'puppet:///modules/cron-puppet/rebase.sh',
+        mode    => 0700,
+        owner   => root,
+        group   => root,
+    }
     cron { 'puppet-apply':
         ensure  => present,
-        command => "cd /etc/puppet ; /usr/bin/git pull",
+        command => "/etc/puppet/rebase.sh",
         user    => root,
         minute  => '*/30',
         require => File['post-hook'],
