@@ -21,11 +21,31 @@ When the "vagrant up" process has completed, you will see the location of the ru
 
 Descripton
 ---------------
-The O/S chosen for this deployment is Centos 7.2.<br>
+The O/S chosen for this deployment is CentOS 7.2.<br>
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
-Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration of the O/S, as well as the installation of the Simple Sinatra application.<br>
 
-Once the O/S has been deployed, Puppet and Git are installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
+Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration and hardening of the O/S, as well as the installation of the Simple Sinatra application.<br>
+
+The Ruby version chosen is 2.4, and is installed from the CentOS Software Collections repository. The reason behind this decision was to allow Puppet to install these packages using the native yum tools (as opposed to using RVM, or manually compiling).<br>
+
+The Simple Sinatra app has been configured as a service. This allow Puppet to easily start/stop/restart the app, if required. It also allows for the application owner (in this case, user "sinatra") to start/stop/restart the app using systemctl (via sudo):
+
+    [root@localhost ~]# sudo -lU sinatra
+    Matching Defaults entries for sinatra on this host:
+    !visiblepw, always_set_home, env_reset, env_keep="COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE",
+    env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE", env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS
+    _XKB_CHARSET XAUTHORITY", secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+    User sinatra may run the following commands on this host:
+    (root) /usr/bin/systemctl start sinatra, /usr/bin/systemctl stop sinatra, /usr/bin/systemctl status sinatra
+
+Once the O/S has been deployed, Puppet is installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
+
+Although the complete installation could be managed from within the <b>config.vm.provision "shell"</b> section of the Vagrant file, the decision has been made to offload these tasks to Puppet. The reasons behind this decision are:
+- It does not lock us in to using Vagrant for the application installation, but instead, only for the initial O/S installation.
+- We can download this Puppet manifest on to another CentOS 7 build (AWS, bare-metal, etc), and expect the exact same outcome (i.e. Simple Sinatra app running on a hardend O/S)
+- The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly commited Git modules.
+
 The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync as part of the Vagrant provisioning process:
 
     .
