@@ -2,7 +2,7 @@ class puppet-cron {
     file { 'post-hook':
         ensure  => file,
         path    => '/etc/puppet/.git/hooks/post-merge',
-        source  => 'puppet:///modules/cron-puppet/post-merge',
+        source  => 'puppet:///modules/puppet-cron/post-merge',
         mode    => 0755,
         owner   => root,
         group   => root,
@@ -10,7 +10,7 @@ class puppet-cron {
 	    file { 'rebase.sh':
         ensure  => file,
 		path => '/etc/puppet/rebase.sh',
-        source  => 'puppet:///modules/cron-puppet/rebase.sh',
+        source  => 'puppet:///modules/puppet-cron/rebase.sh',
         mode    => 0700,
         owner   => root,
         group   => root,
