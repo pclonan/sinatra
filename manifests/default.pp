@@ -3,4 +3,5 @@ node default {
   include users
   include ruby
   include sinatraservice
+  include iptables
 }
