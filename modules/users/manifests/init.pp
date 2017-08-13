@@ -3,13 +3,6 @@ class users {
     ensure => present,
 	gid => '500',
   }
-  file { '/apps':
-    ensure => directory,
-  }
-    file { '/apps/simple-sinatra-app':
-    ensure => directory,
-	require => File['/apps']
-  }
   user { 'sinatra':
     ensure => present,
 	uid => '500',
