@@ -49,7 +49,7 @@ Although the complete installation could be managed from within the <b>config.vm
 
 The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync as part of the Vagrant provisioning process:
 
-    .
+    /home/vagrant/sync
     ├── manifests
     │   └── default.pp
     ├── modules
