@@ -1,6 +1,7 @@
 # The Sinatra app for REA Group
 
-The following process describes the deployment of the REA Group Sinatra app.
+The following process describes the deployment of the REA Group Sinatra app.<br>
+
 https://github.com/rea-cruitment/simple-sinatra-app
 
 The deployment of the O/S is controlled using Vagrant. The O/S version is Centos 7.2.
