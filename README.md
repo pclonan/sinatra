@@ -12,6 +12,12 @@ The deployment of the O/S is controlled using Vagrant. The O/S version is Centos
 * A Git client (eg https://git-scm.com)
 
 **Installation**
+===============================================
+
+    git clone git://github.com/pclonan/sinatra
+    cd sinatra
+    vagrant up
+
 
 1) Clone the following repository:
 ===============================================
