@@ -3,6 +3,6 @@ class ruby {
   Package { ensure => 'installed' }
   package { 'centos-release-scl': }
   package { $rubypackages:
-    require => Package['centos-release-scl',
+    require => Package['centos-release-scl'],
   }
 }
