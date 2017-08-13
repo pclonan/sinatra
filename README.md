@@ -3,20 +3,24 @@
 The following process describes the deployment of the REA Group Sinatra app.<br>
 https://github.com/rea-cruitment/simple-sinatra-app
 
-The O/S is deployed using Vagrant. The O/S version is Centos 7.2.
+The O/S is deployed using Vagrant. The O/S version is Centos 7.2.<br>
 Once the O/S has been deployed, Puppet and Git are installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.
 
 **Prerequisites**
 
 * Vagrant (https://www.vagrantup.com)
 * VirtualBox (https://www.virtualbox.org)
-* A Git client (eg https://git-scm.com)
+* A Git client (eg: https://git-scm.com)
 
 **Installation**
 
     git clone git://github.com/pclonan/sinatra
     cd sinatra
     vagrant up
+
+When the "vagrant up" process has completed, you will see the location of the running Sinatra app:<br>
+
+    ==> default: Notice: Sinatra app: http://192.168.0.200
 
 
 **Expected Output**
@@ -721,3 +725,4 @@ Once the O/S has been deployed, Puppet and Git are installed. This is done via t
     ==> default: Notice: Sinatra app: http://192.168.0.200
     ==> default: Notice: /Stage[main]/Sinatraservice/Notify[sinatra]/message: defined 'message' as 'Sinatra app: http://192.168.0.200'
     ==> default: Notice: Finished catalog run in 33.37 seconds
+
