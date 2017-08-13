@@ -1,3 +1,3 @@
-notify { 'my_message':
-  message => hiera('my_message'),
+node default {
+  include git
 }
