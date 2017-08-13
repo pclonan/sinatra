@@ -51,6 +51,15 @@ However, as there is no Puppet master in this environment, each subsequent Puppe
 
 Expected Output
 ---------------
+    $ git clone git://github.com/pclonan/sinatra
+    Cloning into 'sinatra'...
+    remote: Counting objects: 678, done.
+    remote: Compressing objects: 100% (66/66), done.
+    remote: Total 678 (delta 32), reused 73 (delta 17), pack-reused 572
+    Receiving objects: 100% (678/678), 154.21 KiB | 144.00 KiB/s, done.
+    Resolving deltas: 100% (285/285), done.
+    Checking connectivity... done.
+    $ cd sinatra
     $ vagrant up
     Bringing machine 'default' up with 'virtualbox' provider...
     ==> default: Importing base box 'centos/7'...
