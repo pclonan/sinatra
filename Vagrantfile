@@ -9,9 +9,4 @@ Vagrant.configure("2") do |config|
     yum install -y puppet
     puppet apply --modulepath=/home/vagrant/sync/modules /home/vagrant/sync/manifests/default.pp
   SHELL
-  config.vm.provision "puppet" do |puppet|
-    puppet.module_path = "modules"
-    puppet.manifests_path = "manifests"
-    puppet.hiera_config_path = "hiera.yaml"
-  end
 end
