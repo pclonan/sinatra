@@ -46,4 +46,18 @@ class osharden {
     ensure => running,
     enable => true,
   }
+  service { [ 'snmpd',
+      'apmd',
+      'bluetooth',
+      'firstboot',
+      'tftp-server',
+      'hidd',
+      'kdump.service',
+      'kudzu',
+      'microcode_ctl',
+      'readahead_early',
+      'readahead_later' ]:
+    ensure => stopped,
+    enable => false,
+  }
 }
