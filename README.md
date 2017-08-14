@@ -41,7 +41,7 @@ Ideally, I would have chosen AWS to deploy the O/S on to (using Cloudformations,
 
 Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration and hardening of the O/S, as well as the installation of the Simple Sinatra application. The reason for choosing Puppet is, again, due to my familiarity with the tool.<br>
 
-The Ruby version chosen is 2.4, and is installed from the CentOS Software Collections repository. The reason behind this decision was to allow Puppet to install these packages using the native yum tools (as opposed to using RVM, or manually compiling).<br>
+The Ruby version chosen is 2.4, and is installed from the CentOS Software Collections repository. The reason behind this decision was to allow Puppet to install these packages using the native package resource (as opposed to using RVM, or manually compiling).<br>
 
 The Simple Sinatra app has been configured as a service. This allows Puppet to easily start/stop/restart the app, if required. It also allows for the application owner (in this case, user "sinatra") to start/stop/restart the app using systemctl (via sudo):
 
