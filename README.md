@@ -22,7 +22,19 @@ Once the "vagrant up" process has completed, you will see the location of the ru
 Description
 ---------------
 The O/S chosen for this deployment is CentOS 7.2. (https://app.vagrantup.com/centos/boxes/7)<br>
-The reason for this is mainly due to my familiarity with RHEL 7. And as such, the Puppet modules have only been written for RHEL/CentOS flavours of Linux.<br>
+The reason for this is mainly due to my familiarity with RHEL 7. And as such, the Puppet modules have only been written for RHEL/CentOS flavours of Linux. To enhance this further, the Puppet modules (Ruby installation, Sinatra service creation, etc) could be expanded to cater for Debian flavours of Linux, using the osfamily fact.<br>
+
+    case $::osfamily {
+       'redhat': {
+         # do something RHEL specific
+       }
+       'debian': {
+         # do something Debian specific 
+       }
+       default: {
+         # ...
+       }
+    }
 
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
 Ideally, I would have chosen AWS to deploy the O/S on to (using Cloudformations, installing the app behind a load balancer). However, due to my lack of experience with AWS, I decided to stick with what I know.<br>
@@ -50,6 +62,8 @@ Although the complete installation could be managed from within the <b>config.vm
 - The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly committed Git modules.
 - If our application should happen to die, Puppet will restart it on the next Puppet run.
 
+Once enhancement could be to simply pull a Vagrant image from the Puppetlabs Vagrant Cloud repo (https://app.vagrantup.com/puppetlabs/boxes/centos-7.2-64-puppet). This would remove the need to perform the installation of Puppet, as Puppet comes pre-installed.<br>
+
 The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync by default as part of the Vagrant provisioning process:
 
     /home/vagrant/sync
@@ -69,10 +83,9 @@ The <b>config.vm.provision "shell"</b> option also initiates the first Puppet ru
     ├── README.md
     └── Vagrantfile
 
-However, as there is no Puppet master in this environment, each subsequent Puppet run is controlled via cron. The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
+However, as there is no Puppet master in this environment, each subsequent Puppet run is initiated via cron. The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
 
     */30 * * * * /etc/puppet/rebase.sh
-
 
 Puppet Modules
 ---------------
@@ -88,11 +101,9 @@ The following describes the function of the included Puppet modules:
 * users - Used to create user "sinatra", and to set the password to "sinatra".
 * vcsrepo - taken from the Puppet forge (https://forge.puppet.com/puppetlabs/vcsrepo/1.0.2). Used to deploy the Git repo for the simple-sinatra-app.
 
-
 Expected Output
 ---------------
 When installing the Simple Sinatra application via Vagrant, the expected output should look like this:
-
 
     $ git clone git://github.com/pclonan/sinatra
     Cloning into 'sinatra'...
