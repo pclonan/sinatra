@@ -31,6 +31,7 @@ class sinatraservice {
     provider => git,
     source   => 'https://github.com/rea-cruitment/simple-sinatra-app',
     revision => 'master',
+    user     => 'sinatra',
     require  => File['/apps'],
   }
 
