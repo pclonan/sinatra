@@ -2,8 +2,8 @@ class sinatraservice {
 
   file { '/apps':
     ensure => directory,
-    owner  => 'root',
-    group  => 'root',
+    owner  => 'sinatra',
+    group  => 'sinatra',
     mode   => '0644',
   }
 
