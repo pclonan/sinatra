@@ -15,19 +15,19 @@ Installation
     cd sinatra
     vagrant up
 
-When the "vagrant up" process has completed, you will see the location of the running Sinatra app:<br>
+Once the "vagrant up" process has completed, you will see the location of the running Sinatra app:<br>
 
     ==> default: Notice: Sinatra app: http://192.168.0.200
 
 Descripton
 ---------------
 The O/S chosen for this deployment is CentOS 7.2. (https://app.vagrantup.com/centos/boxes/7)<br>
-The reason for this is mainly due to my familiarity with RHEL 7.<br>
+The reason for this is mainly due to my familiarity with RHEL 7. And as such, the Puppet modules have only been written for RHEL/CentOS flavours of Linux.<br>
 
 The O/S deployment tool chosen for this project is Vagrant - deploying on to VirtualBox.<br>
-Ideally, I would have chosen AWS to deploy the O/S on to (using Cloudformations, installing the app behind a load balancer). However, due to my 
+Ideally, I would have chosen AWS to deploy the O/S on to (using Cloudformations, installing the app behind a load balancer). However, due to my lack of experience with AWS, I decided to stick with what I know.<br>
 
-Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration and hardening of the O/S, as well as the installation of the Simple Sinatra application.<br>
+Puppet has been chosen as the configuration orchestration tool, and will be responsible for the configuration and hardening of the O/S, as well as the installation of the Simple Sinatra application. The reason for choosing Puppet is, again, due to my familiarity with the tool.<br>
 
 The Ruby version chosen is 2.4, and is installed from the CentOS Software Collections repository. The reason behind this decision was to allow Puppet to install these packages using the native yum tools (as opposed to using RVM, or manually compiling).<br>
 
@@ -50,7 +50,7 @@ Although the complete installation could be managed from within the <b>config.vm
 - The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly commited Git modules.
 - If our application should happen to die, Puppet will restart it on the next Puppet run.
 
-The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync as part of the Vagrant provisioning process:
+The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync by default as part of the Vagrant provisioning process:
 
     /home/vagrant/sync
     ├── manifests
@@ -72,6 +72,22 @@ The <b>config.vm.provision "shell"</b> option also initiates the first Puppet ru
 However, as there is no Puppet master in this environment, each subsequent Puppet run is controlled via cron. The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
 
     */30 * * * * /etc/puppet/rebase.sh
+
+
+Puppet Modules
+---------------
+The following describes the function of the included Puppet modules:
+* git - Used to install the Git package.
+* iptables - Used to ensure that the iptables-service is installed and running, and that ports 22/tcp and 80/tcp are open.
+* osharden - Used to create entries within /etc/sysctl.conf, and to disable certain insecure services.
+* puppet-cron - Used to create a cron entry to run every 30 mins, which pulls down the latest Puppet code, and performs a Puppet run.
+* ruby - Used to install Ruby 2.4 from the CentOS Software Collections repository.
+* sinatraservice - Used to create a service which controls the Simple Sinatra app startup/shutdown.
+* ssh - Used to ensure openssh-server is running, and to deny direct root logins.
+* sudo - Used to create sudo rules to allow user "sinatra" to start/stop/restart the sinatra service.
+* users - Used to create user "sinatra", and to set the password to "sinatra".
+* vcsrepo - taken from the Puppet forge (https://forge.puppet.com/puppetlabs/vcsrepo/1.0.2). Used to deploy the Git repo for the simple-sinatra-app.
+
 
 Expected Output
 ---------------
