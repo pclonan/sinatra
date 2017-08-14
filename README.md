@@ -19,7 +19,7 @@ Once the "vagrant up" process has completed, you will see the location of the ru
 
     ==> default: Notice: Sinatra app: http://192.168.0.200
 
-Descripton
+Description
 ---------------
 The O/S chosen for this deployment is CentOS 7.2. (https://app.vagrantup.com/centos/boxes/7)<br>
 The reason for this is mainly due to my familiarity with RHEL 7. And as such, the Puppet modules have only been written for RHEL/CentOS flavours of Linux.<br>
@@ -31,7 +31,7 @@ Puppet has been chosen as the configuration orchestration tool, and will be resp
 
 The Ruby version chosen is 2.4, and is installed from the CentOS Software Collections repository. The reason behind this decision was to allow Puppet to install these packages using the native yum tools (as opposed to using RVM, or manually compiling).<br>
 
-The Simple Sinatra app has been configured as a service. This allow Puppet to easily start/stop/restart the app, if required. It also allows for the application owner (in this case, user "sinatra") to start/stop/restart the app using systemctl (via sudo):
+The Simple Sinatra app has been configured as a service. This allows Puppet to easily start/stop/restart the app, if required. It also allows for the application owner (in this case, user "sinatra") to start/stop/restart the app using systemctl (via sudo):
 
     [root@localhost ~]# sudo -lU sinatra
     Matching Defaults entries for sinatra on this host:
@@ -46,8 +46,8 @@ Once the O/S has been deployed, Puppet is installed. This is done via the <b>con
 
 Although the complete installation could be managed from within the <b>config.vm.provision "shell"</b> section of the Vagrant file, the decision has been made to offload these tasks to Puppet. The reasons behind this decision are:
 - It does not lock us in to using Vagrant for the application installation, but instead, only for the initial O/S installation.
-- We can download this Puppet manifest on to another CentOS 7 build (AWS, bare-metal, etc), and expect the exact same outcome (i.e. Simple Sinatra app running on a hardend O/S)
-- The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly commited Git modules.
+- We can download this Puppet manifest on to another CentOS 7 build (AWS, bare-metal, etc), and expect the exact same outcome (i.e. Simple Sinatra app running on a hardened O/S)
+- The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly committed Git modules.
 - If our application should happen to die, Puppet will restart it on the next Puppet run.
 
 The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync by default as part of the Vagrant provisioning process:
