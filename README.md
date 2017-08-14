@@ -55,14 +55,13 @@ The Simple Sinatra app has been configured as a service. This allows Puppet to e
     (root) /usr/bin/systemctl start sinatra, /usr/bin/systemctl stop sinatra, /usr/bin/systemctl status sinatra
 
 Once the O/S has been deployed, Puppet is installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
+Once enhancement could be to simply pull a Vagrant image from the Puppetlabs Vagrant Cloud repo (https://app.vagrantup.com/puppetlabs/boxes/centos-7.2-64-puppet). This would remove the need to perform the installation of Puppet, as Puppet comes pre-installed.<br>
 
 Although the complete installation could be managed from within the <b>config.vm.provision "shell"</b> section of the Vagrant file, the decision has been made to offload these tasks to Puppet. The reasons behind this decision are:
 - It does not lock us in to using Vagrant for the application installation, but instead, only for the initial O/S installation.
 - We can download this Puppet manifest on to another CentOS 7 build (AWS, bare-metal, etc), and expect the exact same outcome (i.e. Simple Sinatra app running on a hardened O/S)
 - The idempotent nature of Puppet allows us to rerun the code without damaging the application - whilst at the same time, running newly committed Git modules.
 - If our application should happen to die, Puppet will restart it on the next Puppet run.
-
-Once enhancement could be to simply pull a Vagrant image from the Puppetlabs Vagrant Cloud repo (https://app.vagrantup.com/puppetlabs/boxes/centos-7.2-64-puppet). This would remove the need to perform the installation of Puppet, as Puppet comes pre-installed.<br>
 
 The <b>config.vm.provision "shell"</b> option also initiates the first Puppet run, which uses modules included in this Git repo. These modules are synced to /home/vagrant/sync by default as part of the Vagrant provisioning process:
 
@@ -83,19 +82,21 @@ The <b>config.vm.provision "shell"</b> option also initiates the first Puppet ru
     ├── README.md
     └── Vagrantfile
 
-However, as there is no Puppet master in this environment, each subsequent Puppet run is initiated via cron. The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
+This method of using the Vagrant sync still has more dependancy on Vagrant than I would like. As an alternative, the <b>config.vm.provision "shell"</b> script could install git, pull down the Puppet manifest, and initiate a Puppet run.<br>
+
+As there is no Puppet master in this environment, each subsequent Puppet run is initiated via cron (created using the Puppet module "puppet-cron"). The script "/etc/puppet/rebase.sh" pulls down the manifests and modules directories from https://github.com/pclonan/sinatra. The cron entry is:
 
     */30 * * * * /etc/puppet/rebase.sh
 
 Puppet Modules
 ---------------
-The following describes the function of the included Puppet modules:
+The following describes the purpose of the included Puppet modules:
 * git - Used to install the Git package.
-* iptables - Used to ensure that the iptables-service is installed and running, and that ports 22/tcp and 80/tcp are open.
-* osharden - Used to create entries within /etc/sysctl.conf, and to disable certain insecure services.
+* iptables - Used to ensure that the iptables-service is installed and running, and that ports 22/tcp and 80/tcp are open. I decided to use iptables rather than firewalld, so that this code could easily be reused on older versions of RHEL/CentOS (6 or below) or Debian-based distros which do not use firewalld.
+* osharden - Used to create entries within /etc/sysctl.conf, and to disable certain insecure services. The contents of this module were taken from a collection of modules I wrote in the past, in order to create a secure SOE (tested against Nessus and OpenSCAP).
 * puppet-cron - Used to create a cron entry to run every 30 mins, which pulls down the latest Puppet code, and performs a Puppet run.
-* ruby - Used to install Ruby 2.4 from the CentOS Software Collections repository.
-* sinatraservice - Used to create a service which controls the Simple Sinatra app startup/shutdown.
+* ruby - Used to install Ruby 2.4 from the CentOS Software Collections repository. Further development would be required in order to cater for Debian-based distros (as the centos-scl repo would not be used).
+* sinatraservice - Used to create a service which controls the Simple Sinatra app startup/shutdown. It also uses the vcsrepo module to pull down the Git repo https://github.com/rea-cruitment/simple-sinatra-app in to /apps/simple-sinatra-app. Further development would be required to cover the Debian-based distros, as well as allowing for different Ruby versions (rather than using /opt/rh/rh-ruby24).
 * ssh - Used to ensure openssh-server is running, and to deny direct root logins.
 * sudo - Used to create sudo rules to allow user "sinatra" to start/stop/restart the sinatra service.
 * users - Used to create user "sinatra", and to set the password to "sinatra".
