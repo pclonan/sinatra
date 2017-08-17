@@ -55,7 +55,7 @@ The Simple Sinatra app has been configured as a service. This allows Puppet to e
     (root) /usr/bin/systemctl start sinatra, /usr/bin/systemctl stop sinatra, /usr/bin/systemctl status sinatra
 
 Once the O/S has been deployed, Puppet is installed. This is done via the <b>config.vm.provision "shell"</b> option within the Vagrantfile.<br>
-Once enhancement could be to simply pull a Vagrant image from the Puppetlabs Vagrant Cloud repo (https://app.vagrantup.com/puppetlabs/boxes/centos-7.2-64-puppet). This would remove the need to perform the installation of Puppet, as Puppet comes pre-installed.<br>
+One enhancement could be to simply pull a Vagrant image from the Puppetlabs Vagrant Cloud repo (https://app.vagrantup.com/puppetlabs/boxes/centos-7.2-64-puppet). This would remove the need to perform the installation of Puppet, as Puppet comes pre-installed.<br>
 
 Although the complete installation could be managed from within the <b>config.vm.provision "shell"</b> section of the Vagrant file, the decision has been made to offload these tasks to Puppet. The reasons behind this decision are:
 - It does not lock us in to using Vagrant for the application installation, but instead, only for the initial O/S installation.
